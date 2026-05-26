@@ -1,0 +1,39 @@
+@page "/inventory"
+@inject InventoryService InventoryService
+
+<h3>Inventory Items</h3>
+
+<input placeholder="Item Name" @bind="newItem.Name" />
+<input placeholder="Quantity" type="number" @bind="newItem.Quantity" />
+<input placeholder="Price" type="number" @bind="newItem.Price" />
+
+<button @onclick="AddItem">Add Item</button>
+
+<ul>
+    @foreach (var item in items)
+    {
+        <li>
+            @item.Name - Qty: @item.Quantity - ₹@item.Price
+        </li>
+    }
+</ul>
+
+@code {
+    private List<InventoryItem> items = new();
+
+    private InventoryItem newItem = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        items = await InventoryService.GetItems();
+    }
+
+    private async Task AddItem()
+    {
+        await InventoryService.AddItem(newItem);
+
+        items = await InventoryService.GetItems();
+
+        newItem = new InventoryItem();
+    }
+}
