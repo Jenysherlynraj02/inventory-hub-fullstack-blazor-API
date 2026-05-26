@@ -1,0 +1,35 @@
+using Microsoft.AspNetCore.Mvc;
+using InventoryHub.API.Models;
+
+namespace InventoryHub.API.Controllers
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    public class InventoryController : ControllerBase
+    {
+        private static List<InventoryItem> items = new()
+        {
+            new InventoryItem { Id = 1, Name = "Laptop", Quantity = 10, Price = 75000 },
+            new InventoryItem { Id = 2, Name = "Mouse", Quantity = 50, Price = 500 }
+        };
+
+        [HttpGet]
+        public IActionResult GetItems()
+        {
+            return Ok(items);
+        }
+
+        [HttpPost]
+        public IActionResult AddItem(InventoryItem item)
+        {
+            item.Id = items.Count + 1;
+            items.Add(item);
+
+            return Ok(new
+            {
+                message = "Item added successfully",
+                data = item
+            });
+        }
+    }
+}
