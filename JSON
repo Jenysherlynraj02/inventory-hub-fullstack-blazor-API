@@ -1,0 +1,9 @@
+{
+  "message": "Item added successfully",
+  "data": {
+    "id": 3,
+    "name": "Keyboard",
+    "quantity": 5,
+    "price": 1200
+  }
+}
